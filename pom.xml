@@ -8,17 +8,17 @@
 
 	<properties>
 		<storm.version>1.0.3</storm.version>
-		<kafka.version>0.8.2.1</kafka.version>
+		<kafka.version>0.10.1.0</kafka.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<provided.scope>provided</provided.scope>
 		<storm.kafka.version>0.8.2.2</storm.kafka.version>
-		<storm.kafka.artifact.id>kafka_2.10</storm.kafka.artifact.id>
+		<storm.kafka.artifact.id>kafka_2.11</storm.kafka.artifact.id>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
-			<artifactId>kafka_2.10</artifactId>
+			<artifactId>kafka_2.11</artifactId>
 			<version>${kafka.version}</version>
 			<exclusions>
 				<exclusion>
@@ -49,6 +49,26 @@
 	<build>
 		<plugins>
 			<plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-shade-plugin</artifactId>
+	            <version>1.2.1</version>
+	            <executions>
+	                <execution>
+	                    <phase>package</phase>
+	                    <goals>
+	                        <goal>shade</goal>
+	                    </goals>
+	                    <configuration>
+	                        <transformers>
+	                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+	                                <mainClass>com.stormanalytics.csvreader.CsvReader</mainClass>
+	                            </transformer>
+	                        </transformers>
+	                    </configuration>
+	                </execution>
+	            </executions>
+	        </plugin>
+			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
 					<descriptorRefs>
@@ -56,12 +76,21 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>com.path.to.main.Class</mainClass>
+							<mainClass>com.stormanalytics.csvreader.CsvReader</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
 
 			</plugin>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 </project>

@@ -20,7 +20,7 @@ public class CsvReader {
   public static void main(String[] args) throws InterruptedException, ExecutionException {
 
     if (args.length < 3) {
-      LOG.fatal("Incorrect number of arguments. Required arguments: <zk-hosts> <kafka-topic> <zk-path> <clientid>");
+      LOG.fatal("Incorrect number of arguments. Required arguments: <filepath> <kafka bootstrap-server> <kafka-topic>");
       System.exit(1);
     }
 
